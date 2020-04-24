@@ -1,7 +1,6 @@
 package io.quarkus.webapp;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntity;
-
 import javax.persistence.Entity;
 import java.util.Random;
 
@@ -57,9 +56,7 @@ public class Airport extends PanacheEntity {
     }
 
     public static Airport findRandom() {
-        long countAirports = Airport.count();
-        Random random = new Random();
-        int randomAirport = random.nextInt((int) countAirports);
+        int randomAirport = new Random().nextInt((int) Airport.count());
         return Airport.findAll().page(randomAirport, 1).firstResult();
     }
 

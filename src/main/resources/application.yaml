@@ -1,0 +1,54 @@
+quarkus:
+  oidc:
+    enabled: true
+    application-type: web-app
+    authentication:
+      redirect-path: /auth
+  http:
+    proxy-address-forwarding: true
+    auth:
+      permission:
+        authenticated:
+          paths: /*
+          policy: authenticated
+  hibernate-orm:
+    database:
+      generation: create
+    sql-load-script: import.sql
+    dialect: org.hibernate.dialect.SQLServer2012Dialect
+    log:
+      sql: true
+  datasource:
+    driver: com.microsoft.sqlserver.jdbc.SQLServerDriver
+  log:
+    console:
+      enable: true
+      format: '%d{HH:mm:ss} %-5p [%c{2.}] (%t) %s%e%n'
+      level: DEBUG
+      color: true
+
+"%test":
+  quarkus:
+    oidc:
+      enabled: false
+    http:
+      auth:
+        permission:
+          authenticated:
+            paths: /*
+            policy: permit
+    hibernate-orm:
+      database:
+        generation: create
+    datasource:
+      driver: org.testcontainers.jdbc.ContainerDatabaseDriver
+      url: jdbc:tc:sqlserver:latest:///airport
+
+"%dev":
+  quarkus:
+    hibernate-orm:
+      database:
+        generation: drop-and-create
+      sql-load-script: import.sql
+    datasource:
+      url: jdbc:sqlserver://localhost:1433
