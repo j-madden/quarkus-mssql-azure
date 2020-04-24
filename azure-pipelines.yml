@@ -35,3 +35,4 @@ steps:
     WebAppName: 'airport-service'
     DockerNamespace: '$(containerregistry)/quarkus/airport'
     DockerRepository: '$(containerregistry)/quarkus/airport'
+    ConfigurationSettings: '-WEBSITES_PORT=8080'
