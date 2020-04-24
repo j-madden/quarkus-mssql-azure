@@ -1,0 +1,37 @@
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+
+- task: Maven@3
+  inputs:
+    mavenPomFile: 'pom.xml'
+    options: '-Pnative -Dquarkus.native.container-build=true'
+    publishJUnitResults: false
+    javaHomeOption: 'JDKVersion'
+    jdkVersionOption: '1.11'
+    mavenVersionOption: 'Default'
+    mavenAuthenticateFeed: false
+    effectivePomSkip: false
+    sonarQubeRunAnalysis: false
+
+    
+- task: Docker@2
+  inputs:
+    containerRegistry: '$(containerregistry)'
+    repository: 'quarkus/airport'
+    command: 'buildAndPush'
+    Dockerfile: '**/Dockerfile.native'
+    buildContext: '.'
+
+- task: AzureRmWebAppDeployment@4
+  inputs:
+    ConnectionType: 'AzureRM'
+    azureSubscription: '$(azuresubscription)'
+    appType: 'webAppContainer'
+    WebAppName: 'airport-service'
+    DockerNamespace: '$(containerregistry)/quarkus/airport'
+    DockerRepository: '$(containerregistry)/quarkus/airport'
