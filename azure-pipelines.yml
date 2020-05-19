@@ -8,7 +8,7 @@ steps:
   - task: Maven@3
     inputs:
       mavenPomFile: 'pom.xml'
-      options: '-Pnative -Dquarkus.native.container-build=true --batch-mode'
+      options: '-Pnative -Dquarkus.native.container-build=true --batch-mode -DskipTests'
       publishJUnitResults: false
       javaHomeOption: 'JDKVersion'
       jdkVersionOption: '1.11'
