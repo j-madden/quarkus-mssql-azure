@@ -37,5 +37,5 @@ RUN chmod 775 /work /work/application \
 EXPOSE 8080
 USER 1001
 
-CMD ["./application", "-Dquarkus.http.host=0.0.0.0", "-Dquarkus.http.port=8080", "-Djava.library.path=/work/lib", "-Djavax.net.ssl.trustStore=/work/cacerts"]
+CMD ["./application", "-Dquarkus.http.host=0.0.0.0",  "-Djava.library.path=/work/lib", "-Djavax.net.ssl.trustStore=/work/cacerts"]
 
